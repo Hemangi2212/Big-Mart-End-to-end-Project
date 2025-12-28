@@ -6,31 +6,27 @@ st.set_page_config(page_title="BigMart Sales Predictor", layout="wide", page_ico
 
 # Load model
 import pickle
-import streamlit as st
 
-@st.cache_resource
 def load_model():
     with open("bigmart_best_model.pkl", "rb") as f:
         obj = pickle.load(f)
 
-    # If it's a tuple, find the actual model safely
+    st.write("Loaded PKL type:", type(obj))
+
     if isinstance(obj, tuple):
+        st.write("Tuple length:", len(obj))
         for item in obj:
+            st.write("Item type:", type(item))
             if hasattr(item, "predict"):
                 return item
-        raise ValueError("No model with predict() found in PKL file")
 
-    # If it's a dict
-    if isinstance(obj, dict):
-        for v in obj.values():
-            if hasattr(v, "predict"):
-                return v
-        raise ValueError("No model with predict() found in PKL dictionary")
+        raise ValueError("No model with predict() found in tuple")
 
-    # Otherwise assume it's already a model
     return obj
 
 model = load_model()
+
+
 
 
 
