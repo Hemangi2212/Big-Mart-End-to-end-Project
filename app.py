@@ -9,7 +9,11 @@ import pickle
 
 def load_model():
     with open("bigmart_best_model.pkl", "rb") as f:
-        obj = pickle.load(f)
+        model, preprocessor = pickle.load(f)
+    return model, preprocessor
+
+model, preprocessor = load_model()
+
 
     st.write("Loaded PKL type:", type(obj))
 
