@@ -5,12 +5,13 @@ import pandas as pd
 st.set_page_config(page_title="BigMart Sales Predictor", layout="wide", page_icon="🛒")
 
 # Load model
-import pickle
+    # If model is saved as tuple (model, preprocessor)
+    if isinstance(loaded_obj, tuple):
+        model = loaded_obj[0]   # ✅ extract actual model
+    else:
+        model = loaded_obj
 
-@st.cache_resource
-def load_model():
-    with open("bigmart_best_model.pkl", "rb") as file:
-        return pickle.load(file)
+    return model
 
 model = load_model()
 
