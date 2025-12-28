@@ -1,15 +1,20 @@
 import streamlit as st
 import pandas as pd
-import joblib
+
 
 st.set_page_config(page_title="BigMart Sales Predictor", layout="wide", page_icon="🛒")
 
 # Load model
+import pickle
+
 @st.cache_resource
 def load_model():
-    return joblib.load("bigmart_best_model.pkl")
+    with open("bigmart_best_model.pkl", "rb") as file:
+        return pickle.load(file)
 
 model = load_model()
+
+
 
 # ---------------- HEADER ----------------
 st.title("🛍️ BigMart Sales Prediction Dashboard")
